@@ -25,6 +25,18 @@
       <version>${r2dbc.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-spanner</artifactId>
+      <version>1.11.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <version>3.2.8.RELEASE</version>
+    </dependency>
+
     <!-- test dependencies -->
     <dependency>
       <groupId>org.assertj</groupId>
