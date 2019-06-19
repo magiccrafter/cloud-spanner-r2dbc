@@ -294,10 +294,23 @@ through the Spanner connection factory:
     
 See the above section regarding `ConnectionFactory` options for more information.
 
-## Back Pressure
+## Backpressure
 
-Table rows are transmitted from Cloud Spanner in fragments called `PartialResultset`.
-The number of fragments for each row cannot be determined beforehand. 
-While you can decide the number of rows you request from `SpannerResult`, the Cloud Spanner R2DBC driver will always request a fixed number of fragments from Cloud Spanner to fulfill your request and will do so repeatedly if necessary.
+When read queries are made to Cloud Spanner databases, the query result's rows
+are transmitted from Cloud Spanner to the client in batches called `PartialResultSets`.
+These `PartialResultSet` objects may contain any number of row fragments, and the
+Cloud Spanner R2DBC driver retrieves and processes the `PartialResultSets` into Spanner table rows.
 
-The default number of fragments per request to Cloud Spanner is 1, but this can be configured with the `partial_result_set_fetch_size` config property for your situation.
+This has certain implications for backpressure.
+
+While you can decide the number of rows you request from `SpannerResult`, the Cloud Spanner
+R2DBC driver still must request at least one `PartialResultSet` object from the Spanner database
+to convert into well-formed rows.
+ 
+Therefore, Cloud Spanner R2DBC driver offers a setting `partial_result_set_fetch_size` through
+the `ConnectionFactory` which you to set the prefetch size of the initial request of
+`PartialResultSets` made to Spanner. [Prefetch](https://projectreactor.io/docs/core/release/reference/#_operators_changing_the_demand_from_downstream)
+is a way to tune the initial request made on these inner sequences.
+
+By default, the `partial_result_set_fetch_size` config is set to 1; it may be customized to your
+situation.
