@@ -104,6 +104,12 @@
       <artifactId>google-cloud-spanner</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.projectreactor.tools</groupId>
+      <artifactId>blockhound</artifactId>
+      <version>${blockhound.version}</version>
+      <scope>test</scope>
+    </dependency>
 
     <!-- facilitate project ID discovery in integration tests -->
     <dependency>

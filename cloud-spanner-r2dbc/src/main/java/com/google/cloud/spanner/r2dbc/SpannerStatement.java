@@ -108,6 +108,14 @@ public class SpannerStatement implements Statement {
 
   @Override
   public Publisher<? extends Result> execute() {
+
+/*    System.out.println("Sleeping 1: " + Thread.currentThread().getName());
+    try {
+      Thread.sleep(1);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }*/
+
     if (this.statementType == StatementType.DDL) {
       return this.client
           .executeDdl(
@@ -134,7 +142,15 @@ public class SpannerStatement implements Statement {
     }
 
     Flux<Struct> structFlux = Flux.fromIterable(this.statementBindings.getBindings());
-    return structFlux.flatMap(this::runStreamingSql);
+    return structFlux.flatMap(this::runStreamingSql)
+     /*   .doOnNext(a -> {
+      try {
+        System.out.println("Sleeping 2: " + Thread.currentThread().getName());
+        Thread.sleep(1);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    })*/;
   }
 
   private Mono<SpannerResult> runStreamingSql(Struct params) {

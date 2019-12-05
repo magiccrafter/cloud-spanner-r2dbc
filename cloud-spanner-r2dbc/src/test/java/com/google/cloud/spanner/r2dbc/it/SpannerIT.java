@@ -59,8 +59,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.blockhound.BlockHound;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -349,6 +352,8 @@ public class SpannerIT {
 
   @Test
   public void testQuerying() {
+    BlockHound.install();
+
     long count = executeReadQuery(
         connectionFactory,
         "Select count(1) as count FROM books",
