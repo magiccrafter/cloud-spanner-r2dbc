@@ -109,7 +109,9 @@ public class SpannerStatement implements Statement {
   @Override
   public Publisher<? extends Result> execute() {
 
-/*    System.out.println("Sleeping 1: " + Thread.currentThread().getName());
+/*
+   // introducing some blocking for testing Blockhound.
+   System.out.println("Sleeping 1: " + Thread.currentThread().getName());
     try {
       Thread.sleep(1);
     } catch (InterruptedException e) {
@@ -144,6 +146,7 @@ public class SpannerStatement implements Statement {
     Flux<Struct> structFlux = Flux.fromIterable(this.statementBindings.getBindings());
     return structFlux.flatMap(this::runStreamingSql)
      /*   .doOnNext(a -> {
+      // whee! more blocking calls for testing.
       try {
         System.out.println("Sleeping 2: " + Thread.currentThread().getName());
         Thread.sleep(1);
