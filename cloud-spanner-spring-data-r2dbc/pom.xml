@@ -15,6 +15,7 @@
   <properties>
     <spring-data-r2dbc.version>1.4.3</spring-data-r2dbc.version>
     <spring-test.version>5.3.17</spring-test.version>
+    <spring-boot-autoconfigure.version>2.6.6</spring-boot-autoconfigure.version>
   </properties>
 
   <dependencies>
@@ -35,6 +36,11 @@
       <artifactId>spring-test</artifactId>
       <version>${spring-test.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+      <version>${spring-boot-autoconfigure.version}</version>
     </dependency>
 
 

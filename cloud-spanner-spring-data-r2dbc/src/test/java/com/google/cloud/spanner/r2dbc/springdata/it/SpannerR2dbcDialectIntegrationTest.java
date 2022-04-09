@@ -55,9 +55,9 @@ class SpannerR2dbcDialectIntegrationTest {
   private static final String DRIVER_NAME = "spanner";
 
   private static final String TEST_INSTANCE =
-      System.getProperty("spanner.instance", "reactivetest");
+      System.getProperty("spanner.instance", "nv-local-instance");
 
-  private static final String TEST_DATABASE = System.getProperty("spanner.database", "testdb");
+  private static final String TEST_DATABASE = System.getProperty("spanner.database", "trades");
 
   private static final ConnectionFactory connectionFactory =
       ConnectionFactories.get(
@@ -66,6 +66,7 @@ class SpannerR2dbcDialectIntegrationTest {
               .option(DRIVER, DRIVER_NAME)
               .option(INSTANCE, TEST_INSTANCE)
               .option(DATABASE, TEST_DATABASE)
+              .option(Option.valueOf("usePlainText"), true)
               .build());
 
   private DatabaseClient databaseClient;
@@ -81,20 +82,20 @@ class SpannerR2dbcDialectIntegrationTest {
     this.databaseClient = this.r2dbcEntityTemplate.getDatabaseClient();
 
     if (SpannerTestUtils.tableExists(connection, "PRESIDENT")) {
-      this.databaseClient.sql("DROP TABLE PRESIDENT").fetch().rowsUpdated().block();
+    // this.databaseClient.sql("DROP TABLE PRESIDENT").fetch().rowsUpdated().block();
     }
 
-    this.databaseClient
-        .sql(
-            "CREATE TABLE PRESIDENT ("
-                + "  NAME STRING(256) NOT NULL,"
-                + "  START_YEAR INT64 NOT NULL,"
-                + "  START_DATE DATE NOT NULL,"
-                + "  CREATED_AT TIMESTAMP NOT NULL,"
-                + ") PRIMARY KEY (NAME)")
-        .fetch()
-        .rowsUpdated()
-        .block();
+    // this.databaseClient
+    //        .sql(
+    //            "CREATE TABLE PRESIDENT ("
+    //                + "  NAME STRING(256) NOT NULL,"
+    //                + "  START_YEAR INT64 NOT NULL,"
+    //                + "  START_DATE DATE NOT NULL,"
+    //                + "  CREATED_AT TIMESTAMP NOT NULL,"
+    //                + ") PRIMARY KEY (NAME)")
+    //        .fetch()
+    //        .rowsUpdated()
+    //        .block();
   }
 
   @AfterEach
